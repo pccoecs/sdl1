@@ -1,0 +1,18 @@
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+CREATE TABLE `user` (
+  `userid` int(100) NOT NULL,
+  `username` varchar(250) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `fullname` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+
+INSERT INTO `user` (`userid`, `username`, `password`, `fullname`) VALUES
+(1, 'Trupti', 'Gunjal', 'Trupti Gunjal'),
+(2, 'prathmamesh', 'viper', 'Prathamesh Kshirsagar');
+(3, 'amit', 'dekate' , 'Amit Dekate');
+COMMIT;
