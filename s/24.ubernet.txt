@@ -1,0 +1,124 @@
+add_products.php
+
+<?php
+include 'config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST["name"];
+    $description = $_POST["description"];
+    $price = $_POST["price"];
+    $image = $_POST["image"];
+
+    $sql = "INSERT INTO products (name, description, price, image) VALUES ('$name', '$description', '$price', '$image')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+<body>
+    <h1>Add Product</h1>
+
+    <form method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" min="0" step="0.01" required>
+        </div>
+        <div>
+            <label for="image">Image URL:</label>
+            <input type="text" id="image" name="image" required>
+        </div>
+        <button type="submit">Add Product</button>
+    </form>
+</body>
+</html>
+
+
+config.php
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+
+database.sql
+
+CREATE DATABASE ecommerce;
+
+USE ecommerce;
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    image VARCHAR(255)
+);
+
+index.php
+
+<?php
+include 'config.php';
+
+$sql = "SELECT * FROM products";
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple E-commerce Platform</title>
+</head>
+<body>
+    <h1>Welcome to our E-commerce Platform</h1>
+
+    <a href="add_product.php">Add Product</a>
+
+    <?php
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "<div>";
+            echo "<h2>" . $row["name"] . "</h2>";
+            echo "<p>" . $row["description"] . "</p>";
+            echo "<p>Price: $" . $row["price"] . "</p>";
+            echo "<img src='" . $row["image"] . "' alt='" . $row["name"] . "' width='200'>";
+            echo "<button>Add to Cart</button>";
+            echo "</div>";
+        }
+    } else {
+        echo "0 results";
+    }
+    $conn->close();
+    ?>
+</body>
+</html>

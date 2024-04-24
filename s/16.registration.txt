@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm" onsubmit="return validateRegistration()">
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" required>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" required>
+            </div>
+            <div class="form-group">
+                <label for="organization">Organization:</label>
+                <input type="text" id="organization" name="organization">
+            </div>
+            <div class="form-group">
+                <label for="hobbies">Hobbies:</label>
+                <input type="text" id="hobbies" name="hobbies">
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+CSS
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 50%;
+    margin: 50px auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #357ae8;
+}
+
+
+JS
+
+function validateRegistration() {
+    var firstname = document.getElementById('firstname').value.trim();
+    var lastname = document.getElementById('lastname').value.trim();
+    var organization = document.getElementById('organization').value.trim();
+    var hobbies = document.getElementById('hobbies').value.trim();
+
+    if (firstname === '') {
+        alert('Please enter your first name.');
+        return false;
+    }
+
+    if (lastname === '') {
+        alert('Please enter your last name.');
+        return false;
+    }
+
+    // Additional validation logic if needed
+
+    // Display registration details
+    var registrationDetails = "First Name: " + firstname + "\n";
+    registrationDetails += "Last Name: " + lastname + "\n";
+    registrationDetails += "Organization: " + organization + "\n";
+    registrationDetails += "Hobbies: " + hobbies + "\n";
+
+    alert("Registration successful!\n\n" + registrationDetails);
+
+    return true;
+}

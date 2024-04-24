@@ -1,0 +1,119 @@
+database.sql
+
+-- Open your web browser and go to http://localhost/phpmyadmin.
+-- Click on "New" to create a new database.
+-- Database Name: library
+-- Collation: utf8mb4_unicode_ci
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    description TEXT,
+    image VARCHAR(255)
+);
+
+INSERT INTO books (title, author, description, image) VALUES 
+('Book 1', 'Author 1', 'Description of Book 1', 'book1.jpg'),
+('Book 2', 'Author 2', 'Description of Book 2', 'book2.jpg'),
+('Book 3', 'Author 3', 'Description of Book 3', 'book3.jpg');
+
+dp.php
+
+<?php
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'library';
+
+$conn = mysqli_connect($host, $username, $password, $database);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+?>
+
+index.php
+
+<?php
+require_once 'db.php';
+
+$query = "SELECT * FROM books";
+$result = mysqli_query($conn, $query);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Library Catalog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Library Catalog</h1>
+        <div class="books">
+            <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                <div class="book">
+                    <img src="images/<?php echo $row['image']; ?>" alt="<?php echo $row['title']; ?>">
+                    <h2><?php echo $row['title']; ?></h2>
+                    <h3>By <?php echo $row['author']; ?></h3>
+                    <p><?php echo $row['description']; ?></p>
+                </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+</body>
+
+</html>
+
+style.css
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+}
+
+.book {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.book img {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.book h2 {
+    margin-top: 0;
+}
+
+.book h3 {
+    margin-top: 5px;
+    color: #888;
+}
+
+.book p {
+    margin: 10px 0;
+}

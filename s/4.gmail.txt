@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail Registration Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Gmail Registration Form</h2>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Choose your username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Create a password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <div id="errorMessage"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+CSS
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 50%;
+    margin: 50px auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #357ae8;
+}
+
+
+JS
+
+function validateForm() {
+    var firstName = document.getElementById('firstName').value.trim();
+    var lastName = document.getElementById('lastName').value.trim();
+    var username = document.getElementById('username').value.trim();
+    var password = document.getElementById('password').value.trim();
+    var errorMessage = document.getElementById('errorMessage');
+
+    errorMessage.innerHTML = '';
+
+    if (firstName === '') {
+        errorMessage.innerHTML += 'First name is required.<br>';
+    }
+
+    if (lastName === '') {
+        errorMessage.innerHTML += 'Last name is required.<br>';
+    }
+
+    if (username === '') {
+        errorMessage.innerHTML += 'Username is required.<br>';
+    }
+
+    if (password === '') {
+        errorMessage.innerHTML += 'Password is required.<br>';
+    } else if (password.length < 6) {
+        errorMessage.innerHTML += 'Password must be at least 6 characters long.<br>';
+    }
+
+    if (errorMessage.innerHTML !== '') {
+        return false; // Prevent form submission if there are errors
+    }
+
+    return true;
+}
