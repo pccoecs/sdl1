@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<library>
+
+<books>
+<book id="1">
+<title> C++ </title>
+<author> S.V.Ranman </author>
+<publication> ABC </publication>
+<isbn> 879654 </isbn>
+</book>
+<book id="2">
+<title> Java </title>
+<author> ALC </author>
+<publication> XYZ </publication>
+<isbn> 523698 </isbn>
+</book>
+</books>
+
+<members>
+<member id="1">
+<name> Trupti </name>
+<book_issued> 
+<book_id> 1 </book_id>
+<book_id> 2 </book_id>
+</book_issued>
+</member>
+<member id="2">
+<name> ATHARVA </name>
+<book_issued> 
+<book_id> 2 </book_id>
+</book_issued>
+</member>
+</members>
+</library>
