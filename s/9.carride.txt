@@ -1,0 +1,204 @@
+database.sql
+
+-- First Create a database named toll_tax_management_system in XAMPP Server under phpMyAdmin
+-- Then run the following SQL commands to create the vehicles table
+
+CREATE DATABASE toll_tax_management_system;
+
+CREATE TABLE vehicles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    vehicle_number VARCHAR(20) NOT NULL,
+    vehicle_type ENUM('Car', 'Bus', 'Truck') NOT NULL,
+    toll_amount DECIMAL(10, 2) NOT NULL,
+    payment_status ENUM('Paid', 'Unpaid') DEFAULT 'Unpaid',
+    entry_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+index.php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toll Tax Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Toll Tax Management System</h1>
+        <form action="submit_vehicle.php" method="POST">
+            <label for="vehicle_number">Vehicle Number:</label>
+            <input type="text" id="vehicle_number" name="vehicle_number" required><br><br>
+
+            <label for="vehicle_type">Vehicle Type:</label>
+            <select id="vehicle_type" name="vehicle_type" required>
+                <option value="Car">Car</option>
+                <option value="Bus">Bus</option>
+                <option value="Truck">Truck</option>
+            </select><br><br>
+
+            <label for="toll_amount">Toll Amount:</label>
+            <input type="text" id="toll_amount" name="toll_amount" required><br><br>
+
+            <button type="submit">Submit Vehicle Details</button>
+        </form>
+    </div>
+</body>
+</html>
+
+style.css
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+submit_vehicle.php
+<?php
+// Database connection
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$database = "complaint_management_system";
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$name = $conn->real_escape_string($_POST['name']);
+$email = $conn->real_escape_string($_POST['email']);
+$department = $conn->real_escape_string($_POST['department']);
+$complaint = $conn->real_escape_string($_POST['complaint']);
+
+// Insert complaint into database
+$sql = "INSERT INTO complaints (name, email, department, complaint) VALUES ('$name', '$email', '$department', '$complaint')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "<script>alert('Complaint submitted successfully!');</script>";
+    echo "<script>window.location.href = 'index.php';</script>";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+// Close connection
+$conn->close();
+?>
+
+view_vehicles.php
+
+<?php
+// Database connection
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$database = "complaint_management_system";
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch complaints from database
+$sql = "SELECT * FROM complaints";
+$result = $conn->query($sql);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Complaints - Complaint Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Complaint Management System</h1>
+        <h2>View Complaints</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Complaint</th>
+                <th>Status</th>
+                <th>Created At</th>
+            </tr>
+            <?php
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td>" . $row['email'] . "</td>";
+                    echo "<td>" . $row['department'] . "</td>";
+                    echo "<td>" . $row['complaint'] . "</td>";
+                    echo "<td>" . $row['status'] . "</td>";
+                    echo "<td>" . $row['created_at'] . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='6'>No complaints found</td></tr>";
+            }
+            ?>
+        </table>
+    </div>
+</body>
+</html>
+
+<?php
+// Close connection
+$conn->close();
+?>

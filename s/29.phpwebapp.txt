@@ -1,0 +1,212 @@
+add.php
+
+<?php
+require_once 'db.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+
+    $query = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
+    mysqli_query($conn, $query);
+
+    header("Location: index.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Add User</h1>
+        <form action="" method="post">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</body>
+
+</html>
+
+database.sql
+
+-- Open your web browser and go to http://localhost/phpmyadmin.
+-- Click on "New" to create a new database.
+-- Database Name: crud_app
+-- Collation: utf8mb4_unicode_ci
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+
+db.php
+
+<?php
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'crud_app';
+
+$conn = mysqli_connect($host, $username, $password, $database);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+?>
+
+delete.php
+
+<?php
+require_once 'db.php';
+
+$id = $_GET['id'];
+$query = "DELETE FROM users WHERE id = $id";
+mysqli_query($conn, $query);
+
+header("Location: index.php");
+exit;
+?>
+
+edit.php
+
+<?php
+require_once 'db.php';
+
+$id = $_GET['id'];
+$query = "SELECT * FROM users WHERE id = $id";
+$result = mysqli_query($conn, $query);
+$user = mysqli_fetch_assoc($result);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+
+    $query = "UPDATE users SET name = '$name', email = '$email' WHERE id = $id";
+    mysqli_query($conn, $query);
+
+    header("Location: index.php");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Edit User</h1>
+        <form action="" method="post">
+            <input type="text" name="name" placeholder="Name" value="<?php echo $user['name']; ?>" required>
+            <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</body>
+
+</html>
+
+index.php
+
+<?php
+require_once 'db.php';
+
+$query = "SELECT * FROM users";
+$result = mysqli_query($conn, $query);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>CRUD Application</h1>
+        <a href="add.php" class="btn">Add User</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                    <tr>
+                        <td><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td>
+                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn">Edit</a>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn">Delete</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+style.css
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
