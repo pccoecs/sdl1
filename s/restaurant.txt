@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant Data Entry</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<h2>Restaurant Data Entry</h2>
+
+<form id="restaurantForm">
+    <table>
+        <tr>
+            <th>Restaurant Name:</th>
+            <td><input type="text" id="restaurantName" name="restaurantName"></td>
+        </tr>
+        <tr>
+            <th>Location:</th>
+            <td><input type="text" id="location" name="location"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Submit"></td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    document.getElementById("restaurantForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var restaurantName = document.getElementById("restaurantName").value.trim();
+        var location = document.getElementById("location").value.trim();
+
+        if (restaurantName !== "" && location !== "") {
+            // Perform some action with the entered data, like sending it to a server
+            alert("Restaurant Name: " + restaurantName + "\nLocation: " + location);
+        } else {
+            alert("Please fill in all fields");
+        }
+    });
+</script>
+
+</body>
+</html>
