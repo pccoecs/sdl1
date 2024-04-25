@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TY TIME TABLE</title>
+    <style>
+        h2{
+            text-align: center;
+            color: red;
+        }
+        table {
+            width: 100%;
+            text-align: center; 
+        }
+    </style>
+</head>
+<body>
+    <h2>TY ACADEMIC TIME TABLE 2024-2023</h2>
+    <table border="2">
+        <thead>
+            <tr>
+                <th style="background-color: aqua;">Weekdays</th> 
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="4">Monday</td> 
+                <td>9:00 AM - 10:00 AM</td>
+                <td>Mathematics</td>
+                <td>Mr. Smith</td>
+            </tr>
+            <tr>
+                <td>10:00 AM - 11:00 AM</td>
+                <td>Physics</td>
+                <td>Ms. Johnson</td>
+            </tr>
+            <tr>
+                <td colspan="3">short break</td>
+            </tr>
+            <tr>
+                <td>11.15 AM - 12.15 AM</td>
+                <td>SDL</td>
+                <td>Mrs.Sarika deokate</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Tuesday</td>
+                <td>9.00AM - 10.00 AM</td>
+                <td>SDL</td>
+                <td>Mrs.Sarika deokate</td>
+            </tr>
+            <tr>
+                <td>10.00 AM - 11.00 AM</td>
+                <td>OS</td>
+                <td>Mrs. Shivani Pandey</td>
+            </tr>
+            
+        </tbody>
+    </table>
+</body>
+</html>

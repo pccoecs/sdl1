@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAILWAY TIME TABLE</title>
+    <style>
+        h2{
+            color: rgb(54, 0, 204);
+            text-rendering: auto;
+            text-align: center;
+        }
+       table{
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse:collapse;
+            border: 2px solid rgb(0, 0, 0);
+            width: 100%;
+            height: 100%;
+       }
+    </style>
+</head>
+<body>
+    <h2>Train Time Table</h2>
+    <table border="2">
+        <thead>
+            <tr>
+                <th colspan="8">RAILWAY TIME TABLE</th>
+            </tr>
+            <tr>
+                <th>Train Name </th>
+                <th>Train No. </th>
+                <th>Train Type </th>
+                <th>Source</th>
+                <th>Destination</th>
+                <th>Time of Departure</th>
+                <th>Time of Arrival</th>
+                <th>Confirmation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Kamini Express</td>
+                <td>8569</td>
+                <td>Special Exp</td>
+                <td>Nshik</td>
+                <td>Pune</td>
+                <td>10:00 PM</td>
+                <td>12:00 PM</td>
+                <td style="background-color: green; color: aliceblue;">Available</td>
+            </tr>
+            <tr>
+                <td>Chandrapur Express</td>
+                <td>102</td>
+                <td>Slow</td>
+                <td>Pune</td>
+                <td>Chandrapur</td>
+                <td>10.00 AM</td>
+                <td>12.00 AM</td>
+                <td style="background-color: red; color: aliceblue;">Not Available</td>
+
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
